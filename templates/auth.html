@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}{{ 'Create account' if mode=='register' else 'Sign in' }} · CivicDesk{% endblock %}{% block content %}
+<section class="auth-wrap"><div class="auth-intro"><div class="eyebrow">YOUR CAMPUS, YOUR VOICE</div><h1>{{ 'Create your' if mode=='register' else 'Welcome' }}<br><em>{{ 'account.' if mode=='register' else 'back.' }}</em></h1><p>Sign in to submit grievances and follow their progress securely.</p></div>
+<div class="form-card"><h2>{{ 'Create account' if mode=='register' else 'Sign in' }}</h2><form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% if mode=='register' %}<label>Full name<input name="name" maxlength="100" required autocomplete="name" placeholder="Your name"></label>{% endif %}
+<label>Email address<input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+<label>Password<input type="password" name="password" minlength="{{ 8 if mode=='register' else 1 }}" required autocomplete="{{ 'new-password' if mode=='register' else 'current-password' }}" placeholder="{{ 'At least 8 characters' if mode=='register' else 'Your password' }}"></label>
+<button class="btn full">{{ 'Create account' if mode=='register' else 'Sign in' }} <span>↗</span></button></form>
+{% if mode=='login' %}<p class="form-switch"><a href="{{ url_for('forgot_password') }}">Forgot password?</a></p>{% endif %}
+<p class="form-switch">{% if mode=='register' %}Already have an account? <a href="{{ url_for('login') }}">Sign in</a>{% else %}New to CivicDesk? <a href="{{ url_for('register') }}">Create an account</a>{% endif %}</p></div></section>{% endblock %}

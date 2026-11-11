@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Analytics · CivicDesk{% endblock %}{% block head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="eyebrow">REPORTING</div><h1>Platform analytics</h1><p>Snapshot of grievance volume and current status distribution.</p></div><a class="text-link" href="{{ url_for('admin_dashboard') }}">← Admin dashboard</a></div>
+<div class="stat-grid"><div class="stat-card"><span>Total grievances</span><strong>{{ total }}</strong></div><div class="stat-card"><span>Departments</span><strong>{{ categories|length }}</strong></div><div class="stat-card"><span>Status stages</span><strong>{{ statuses|length }}</strong></div></div>
+<div class="stat-grid"><div class="stat-card"><span>Average student rating</span><strong>{{ avg_rating if avg_rating is not none else '—' }}{% if avg_rating is not none %}/5{% endif %}</strong></div></div>
+<div class="chart-grid"><section class="table-card chart-card"><h2>By department</h2><canvas id="categoryChart"></canvas></section><section class="table-card chart-card"><h2>By status</h2><canvas id="statusChart"></canvas></section><section class="table-card chart-card"><h2>Monthly submissions</h2><canvas id="monthlyChart"></canvas></section></div>
+<script>
+const categoryData={{ categories|tojson }}; const statusData={{ statuses|tojson }}; const monthlyData={{ monthly|tojson }};
+new Chart(document.getElementById('categoryChart'),{type:'bar',data:{labels:Object.keys(categoryData),datasets:[{label:'Grievances',data:Object.values(categoryData),backgroundColor:'#6475e8',borderRadius:6}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});
+new Chart(document.getElementById('statusChart'),{type:'doughnut',data:{labels:Object.keys(statusData),datasets:[{data:Object.values(statusData),backgroundColor:['#6475e8','#8b9af0','#f0b45c','#37aa7b','#d77b7b']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+new Chart(document.getElementById('monthlyChart'),{type:'line',data:{labels:Object.keys(monthlyData),datasets:[{label:'Submissions',data:Object.values(monthlyData),borderColor:'#6475e8',tension:.25}]},options:{responsive:true,scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});
+</script>{% endblock %}
