@@ -194,12 +194,12 @@ The training script uses a stratified holdout split and fits TF-IDF inside an sk
 
 ## Known limitations / roadmap
 
-- No password reset, email verification, file attachments, or student notification inbox yet.
-- Admin roles are global; per-department staff roles and assignment workflow are future work.
-- No database migration history yet; use Flask-Migrate for future schema changes.
-- Analytics currently show counts, not cohort-adjusted resolution SLAs.
-- Add human review for uncertain model predictions and validate priority logic with stakeholders.
-
+- Improve classification using more diverse, real-world complaint examples.
+- Add human review for uncertain model predictions.
+- Improve model evaluation using unseen and deduplicated complaints.
+- Add database migration history using Flask-Migrate.
+- Improve analytics with resolution-time and service-level metrics.
+- Add file attachments and a student notification inbox. 
 ## License
 
 MIT License. See `LICENSE`.
